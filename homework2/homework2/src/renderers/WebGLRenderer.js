@@ -58,13 +58,17 @@ class WebGLRenderer {
                             false,
                             cameraModelMatrix);
                     }
+                    if (k.startsWith('uPrecomputeL')) {
+                        // Bonus - Fast Spherical Harmonic Rotation
+                        console.log('load uPrecomputeL');
+                        //let precomputeL_RGBMat3 = getRotationPrecomputeL(precomputeL[guiParams.envmapId], cameraModelMatrix);
+                        let precomputeL_RGBMat3 = getMat3ValueFromRGB(precomputeL[guiParams.envmapId]);
+                        for (let idx = 0; idx < 3; idx++) {
+                            this.gl.uniformMatrix3fv(this.meshes[i].shader.program.uniforms[`uPrecomputeL[${idx}]`], false, precomputeL_RGBMat3[idx]);
+                        }
+                    }
 
-                    // Bonus - Fast Spherical Harmonic Rotation
-                    //let precomputeL_RGBMat3 = getRotationPrecomputeL(precomputeL[guiParams.envmapId], cameraModelMatrix);
-                    
-                    
                 }
-
                 this.meshes[i].draw(this.camera);
             }
         }

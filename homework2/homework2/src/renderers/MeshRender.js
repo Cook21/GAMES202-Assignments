@@ -201,6 +201,7 @@ class MeshRender {
 		gl.useProgram(this.shader.program.glShaderProgram);
 		
 		// Bind attribute mat3 - LT
+		//由于每个顶点的可见项不同，所以在MeshRender中传入
 		const buf = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, buf);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(precomputeLT[guiParams.envmapId]), gl.STATIC_DRAW);

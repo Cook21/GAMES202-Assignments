@@ -86,7 +86,6 @@ async function GAMES202Main() {
 
 	// file parsing
 	for (let i = 0; i < envmap.length; i++) {
-
 		let val = '';
 		await this.loadShaderFile(envmap[i] + "/transport.txt").then(result => {
 			val = result;
@@ -114,8 +113,8 @@ async function GAMES202Main() {
 	}
 
 	// TODO: load model - Add your Material here
-	loadOBJ(renderer, 'assets/bunny/', 'bunny', 'PRTMaterial', boxTransform);
-	// loadOBJ(renderer, 'assets/bunny/', 'bunny', 'addYourPRTMaterial', box2Transform);
+	//loadOBJ(renderer, 'assets/mary/', 'mary', 'PRTMaterial', boxTransform);
+	loadOBJ(renderer, 'assets/mary/', 'mary', 'PRTMaterial', box2Transform);
 
 	function createGUI() {
 		const gui = new dat.gui.GUI();
