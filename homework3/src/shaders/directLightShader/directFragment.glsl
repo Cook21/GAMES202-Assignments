@@ -105,7 +105,7 @@ vec3 GetGBufferDiffuse(vec2 uv) {
  */
 vec3 EvalDiffuse(vec3 wo, vec2 uv) {
   //wo是光源方向
-  vec3 L = GetGBufferDiffuse(uv) * max(dot(wo, GetGBufferNormalWorld(uv)), 0.0);
+  vec3 L = GetGBufferDiffuse(uv) / M_PI * max(dot(wo, GetGBufferNormalWorld(uv)), 0.0);
   return L;
 }
 
