@@ -13,6 +13,7 @@ class SSRMaterial extends Material {
             'uGNormalWorld': { type: 'texture', value: camera.fbo.textures[2] },
             'uGShadow': { type: 'texture', value: camera.fbo.textures[3] },
             'uGPosWorld': { type: 'texture', value: camera.fbo.textures[4] },
+            'uGDirectLight': { type: 'texture', value: camera.directLightFbo.textures[0] },
         }, [], vertexShader, fragmentShader);
     }
 }

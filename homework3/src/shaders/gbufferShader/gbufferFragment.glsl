@@ -7,6 +7,7 @@ uniform sampler2D uKd;
 uniform sampler2D uNt;
 uniform sampler2D uShadowMap;
 
+
 varying mat4 vWorldToLight;
 varying highp vec2 vTextureCoord;
 varying highp vec4 vPosWorld;

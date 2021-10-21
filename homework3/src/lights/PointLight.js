@@ -9,7 +9,7 @@ class PointLight {
         this.mesh = Mesh.cube(setTransform(0, 0, 0, 0.2, 0.2, 0.2, 0));
         this.mat = new EmissiveMaterial(lightIntensity, lightColor);
 
-        this.fbo = new FBO(gl);
+        this.fbo = new FBO(gl,1);
         if (!this.fbo) {
             console.log("无法设置帧缓冲区对象");
             return;

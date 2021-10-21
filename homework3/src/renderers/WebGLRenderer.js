@@ -2,6 +2,7 @@ class WebGLRenderer {
     meshes = [];
     shadowMeshes = [];
     bufferMeshes = [];
+    directLightBufferMeshes = [];
     lights = [];
 
     constructor(gl, camera) {
@@ -18,6 +19,7 @@ class WebGLRenderer {
     addMeshRender(mesh) { this.meshes.push(mesh); }
     addShadowMeshRender(mesh) { this.shadowMeshes.push(mesh); }
     addBufferMeshRender(mesh) { this.bufferMeshes.push(mesh); }
+    addDirectLightBufferMeshRender(mesh) { this.directLightBufferMeshes.push(mesh); }
 
     render() {
         console.assert(this.lights.length != 0, "No light");
@@ -58,6 +60,12 @@ class WebGLRenderer {
         for (let i = 0; i < this.bufferMeshes.length; i++) {
             this.bufferMeshes[i].draw(this.camera, this.camera.fbo, updatedParamters);
             // this.bufferMeshes[i].draw(this.camera);
+        }
+        // Direct Light Buffer pass
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.camera.directLightFbo);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        for (let i = 0; i < this.directLightBufferMeshes.length; i++) {
+            this.directLightBufferMeshes[i].draw(this.camera, this.camera.directLightFbo, updatedParamters);
         }
         // return
 

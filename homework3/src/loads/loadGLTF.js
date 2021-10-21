@@ -55,6 +55,7 @@ function loadGLTF(renderer, path, name, materialName) {
 							material = buildSSRMaterial(diffuseMap, specularMap, light, renderer.camera, "./src/shaders/ssrShader/ssrVertex.glsl", "./src/shaders/ssrShader/ssrFragment.glsl");
 							shadowMaterial = buildShadowMaterial(light, "./src/shaders/shadowShader/shadowVertex.glsl", "./src/shaders/shadowShader/shadowFragment.glsl");
 							bufferMaterial = buildGbufferMaterial(diffuseMap, normalMap, light, renderer.camera, "./src/shaders/gbufferShader/gbufferVertex.glsl", "./src/shaders/gbufferShader/gbufferFragment.glsl");
+							directLightMaterial = buildDirectLightMaterial(diffuseMap, specularMap, light, renderer.camera, "./src/shaders/directLightShader/directVertex.glsl", "./src/shaders/directLightShader/directFragment.glsl");
 							break;
 					}
 
@@ -69,6 +70,10 @@ function loadGLTF(renderer, path, name, materialName) {
 					bufferMaterial.then((data) => {
 						let bufferMeshRender = new MeshRender(renderer.gl, mesh, data);
 						renderer.addBufferMeshRender(bufferMeshRender);
+					});
+					directLightMaterial.then((data) => {
+						let meshRender = new MeshRender(renderer.gl, mesh, data);
+						renderer.addDirectLightBufferMeshRender(meshRender);
 					});
 				}
 

@@ -1,5 +1,5 @@
 class FBO{
-    constructor(gl){
+    constructor(gl,GBufferNum){
         //定义错误函数
         function error() {
             if(framebuffer) gl.deleteFramebuffer(framebuffer);
@@ -34,7 +34,6 @@ class FBO{
         }
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
 
-        var GBufferNum = 5;
 	    framebuffer.attachments = [];
 	    framebuffer.textures = []
 

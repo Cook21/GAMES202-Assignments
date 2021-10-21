@@ -1,25 +1,26 @@
 class DirectLightMaterial extends Material {
 
-    constructor(color, specular, light, translate, scale, vertexShader, fragmentShader) {
-        let lightMVP = light.CalcLightMVP(translate, scale);
+    constructor(diffuseMap, specularMap, light, camera, vertexShader, fragmentShader) {
         let lightIntensity = light.mat.GetIntensity();
+        let lightVP = light.CalcLightVP();
+        let lightDir = light.CalcShadingDirection();
 
         super({
-            // Phong
-            'uSampler': { type: 'texture', value: color },
-            'uKs': { type: '3fv', value: specular },
             'uLightRadiance': { type: '3fv', value: lightIntensity },
-            // Shadow
-            'uShadowMap': { type: 'texture', value: light.fbo },
-            'uLightMVP': { type: 'matrix4fv', value: lightMVP },
-
-        }, [], vertexShader, fragmentShader);
+            'uLightDir': { type: '3fv', value: lightDir },
+            'uGDiffuse': { type: 'texture', value: camera.fbo.textures[0] },
+            'uGDepth': { type: 'texture', value: camera.fbo.textures[1] },
+            'uGNormalWorld': { type: 'texture', value: camera.fbo.textures[2] },
+            'uGShadow': { type: 'texture', value: camera.fbo.textures[3] },
+            'uGPosWorld': { type: 'texture', value: camera.fbo.textures[4] },
+            
+        }, [], vertexShader, fragmentShader, camera.directLightFbo);
     }
 }
 
-async function buildDirectLightMaterial(color, specular, light, translate, scale, vertexPath, fragmentPath) {
+async function buildDirectLightMaterial(diffuseMap, specularMap, light, camera,  vertexPath, fragmentPath) {
     let vertexShader = await getShaderString(vertexPath);
     let fragmentShader = await getShaderString(fragmentPath);
-
-    return new DirectLightMaterial(color, specular, light, translate, scale, vertexShader, fragmentShader);
+    console.log("buildDirectLightMaterial\n");
+    return new DirectLightMaterial(diffuseMap, specularMap, light, camera, vertexShader, fragmentShader);
 }
