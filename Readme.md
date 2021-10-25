@@ -4,4 +4,5 @@
 作业0 WebGL 框架的使用与 Blinn-Phong 着色模型
 作业1 实时阴影（Shadow Map和PCSS）
 作业2 预计算环境光照（PRT）
-作业3 全局光照（屏幕空间光线追踪）
+作业3 全局光照（SSR）
+作业4 高质量着色（Kulla-Conty BRDF）

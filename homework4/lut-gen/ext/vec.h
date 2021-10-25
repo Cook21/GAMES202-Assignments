@@ -1,5 +1,6 @@
 #include <iostream>
-#include <algorithm>   
+#include <algorithm>
+#include <cmath>
 
 const float PI = 3.14159265359;
 
@@ -85,6 +86,11 @@ Vec3<Float> cross(const Vec3<Float> &a, const Vec3<Float> &b) {
 template<typename Float>
 Vec3<Float> normalize(Vec3<Float> a) {
     return a / (std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
+}
+
+template<typename Float>
+Float length(Vec3<Float> a) {
+    return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
 }
 
 template<typename Float>
