@@ -2,6 +2,7 @@
 
 #define NOMINMAX
 #include <string>
+#include <cmath>
 
 #include "filesystem/path.h"
 
@@ -22,12 +23,12 @@ class Denoiser {
   public:
     Denoiser();
 
-    void Init(const FrameInfo &frameInfo, const Buffer2D<Float3> &filteredColor);
-    void Maintain(const FrameInfo &frameInfo);
+    void InitAccColor(const FrameInfo &frameInfo, const Buffer2D<Float3> &filteredColor);
+    void store(const FrameInfo &frameInfo);
 
     void Reprojection(const FrameInfo &frameInfo);
     void TemporalAccumulation(const Buffer2D<Float3> &curFilteredColor);
-    Buffer2D<Float3> Filter(const FrameInfo &frameInfo);
+    Buffer2D<Float3> Filter(const FrameInfo &frameInfo,const Buffer2D<Float3> color);
 
     Buffer2D<Float3> ProcessFrame(const FrameInfo &frameInfo);
 
@@ -36,12 +37,16 @@ class Denoiser {
     Buffer2D<Float3> m_accColor;
     Buffer2D<Float3> m_misc;
     Buffer2D<bool> m_valid;
-    bool m_useTemportal;
+    bool m_hasPrevFrame;
 
-    float m_alpha = 0.2f;
-    float m_sigmaPlane = 0.1f;
-    float m_sigmaColor = 0.6f;
+    const bool useSpatial = true;
+    const bool useTemporal = true;
+    const bool SpatialFirst = false;
+
+    float m_alpha = 0.3f;
+    float m_sigmaPlane = 0.002f;
+    float m_sigmaColor = 0.9f;
     float m_sigmaNormal = 0.1f;
-    float m_sigmaCoord = 32.0f;
-    float m_colorBoxK = 1.0f;
+    float m_sigmaCoord = 0.01f;
+    int m_spatialFilterRadius = 7;
 };
