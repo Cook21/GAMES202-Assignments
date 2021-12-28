@@ -21,6 +21,24 @@ struct FrameInfo {
 
 class Denoiser {
   public:
+    const bool useSpatial = 0;
+    const bool useTemporal = 1;
+    const bool SpatialFirst = false;
+
+    float m_alpha = 0.3f;
+    float m_sigmaPlane = 0.002f;
+    float m_sigmaColor = 0.9f;
+    float m_sigmaNormal = 0.1f;
+    float m_sigmaCoord = 0.01f;
+    int m_spatialFilterRadius = 7;
+
+    FrameInfo m_preFrameInfo;
+    Buffer2D<Float3> m_accColor;
+    Buffer2D<Float3> m_misc;
+    Buffer2D<bool> m_valid;
+    bool m_hasPrevFrame;
+    
+  public:
     Denoiser();
 
     void InitAccColor(const FrameInfo &frameInfo, const Buffer2D<Float3> &filteredColor);
@@ -31,22 +49,4 @@ class Denoiser {
     Buffer2D<Float3> Filter(const FrameInfo &frameInfo,const Buffer2D<Float3> color);
 
     Buffer2D<Float3> ProcessFrame(const FrameInfo &frameInfo);
-
-  public:
-    FrameInfo m_preFrameInfo;
-    Buffer2D<Float3> m_accColor;
-    Buffer2D<Float3> m_misc;
-    Buffer2D<bool> m_valid;
-    bool m_hasPrevFrame;
-
-    const bool useSpatial = true;
-    const bool useTemporal = true;
-    const bool SpatialFirst = false;
-
-    float m_alpha = 0.3f;
-    float m_sigmaPlane = 0.002f;
-    float m_sigmaColor = 0.9f;
-    float m_sigmaNormal = 0.1f;
-    float m_sigmaCoord = 0.01f;
-    int m_spatialFilterRadius = 7;
 };

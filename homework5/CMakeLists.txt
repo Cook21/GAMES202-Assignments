@@ -3,7 +3,6 @@ project (Denoise)
 
 set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-
 ########################################
 
 include_directories(
@@ -26,18 +25,14 @@ foreach(_source_file IN ITEMS ${SOURCE_FILE})
     string(REPLACE "/" "\\" _group_path "${_group_path}")
     source_group("${_group_path}" FILES "${_source_file}")
 endforeach()
-
+add_executable(Denoise ${SOURCE_FILE})
 ########################################
 
 # OpenMP
-FIND_PACKAGE(OpenMP)
+FIND_PACKAGE(OpenMP REQUIRED)
 if(OPENMP_FOUND)
     message("OPENMP FOUND")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+    target_link_libraries(Denoise PRIVATE OpenMP::OpenMP_CXX)
 endif()
-
 ########################################
 
-add_executable(Denoise ${SOURCE_FILE})
